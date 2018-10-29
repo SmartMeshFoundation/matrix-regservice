@@ -3,6 +3,18 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "vtXjsZmiboIThvBUG64QjXelECg=",
+			"path": "github.com/SmartMeshFoundation/Photon/log",
+			"revision": "b0e2ca18621eecd169b17621bdac3761b0199120",
+			"revisionTime": "2018-10-29T07:04:47Z"
+		},
+		{
+			"checksumSHA1": "bb5IWEgVke9aB+rGtM6T66vnV1I=",
+			"path": "github.com/SmartMeshFoundation/Photon/utils",
+			"revision": "b0e2ca18621eecd169b17621bdac3761b0199120",
+			"revisionTime": "2018-10-29T07:04:47Z"
+		},
+		{
 			"checksumSHA1": "qJUj9d0gBJAeJUqMaqZTltsxnzM=",
 			"path": "github.com/SmartMeshFoundation/SmartRaiden/log",
 			"revision": "4de5d6743e943d76f2ee6752a0a30ea97ed56a44",

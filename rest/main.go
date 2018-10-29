@@ -7,7 +7,7 @@ import (
 
 	"fmt"
 
-	"github.com/SmartMeshFoundation/SmartRaiden/log"
+	"github.com/SmartMeshFoundation/Photon/log"
 	"github.com/ant0ine/go-json-rest/rest"
 )
 

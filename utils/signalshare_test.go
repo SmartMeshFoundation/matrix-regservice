@@ -6,7 +6,7 @@ import (
 
 	"github.com/SmartMeshFoundation/matrix-regservice/params"
 
-	"github.com/SmartMeshFoundation/SmartRaiden/utils"
+	"github.com/SmartMeshFoundation/Photon/utils"
 
 	"fmt"
 )

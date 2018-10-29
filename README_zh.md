@@ -1,6 +1,6 @@
 # matrix-regservice
-matrix-regservice 作为matrix的第三方 application service 使用,主要作用为限制SmartRaiden所使用的Matrix服务器只能接受有效的Raiden用户注册.
-即注册在此Matrix服务器的用户只能是SmartRaiden节点,这些节点拥有统一的名字,并且可以保证这些用户必须掌握对应的私钥才能注册.
+matrix-regservice 作为matrix的第三方 application service 使用,主要作用为限制Photon所使用的Matrix服务器只能接受有效的Photon用户注册.
+即注册在此Matrix服务器的用户只能是Photon节点,这些节点拥有统一的名字,并且可以保证这些用户必须掌握对应的私钥才能注册.
 
 
 ## Matrix 服务器的部署

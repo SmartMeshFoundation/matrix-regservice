@@ -10,7 +10,7 @@ var HSToken = "6350c08ee06eed113f84da06c2f85369dcf0777d79d9679efd3ad2abdadd01d9"
 var MatrixRegisterUrl = "http://127.0.0.1:8008/_matrix/client/api/v1/createUser"
 
 //MatrixDomain domain of
-var MatrixDomain = "transport01.smartraiden.network"
+var MatrixDomain = "transport01.photon.network"
 
 //APIHost is host for service listening
 var APIHost = "127.0.0.1"

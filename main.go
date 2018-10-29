@@ -10,11 +10,11 @@ import (
 
 	"github.com/SmartMeshFoundation/matrix-regservice/models"
 
-	"github.com/SmartMeshFoundation/SmartRaiden/utils"
+	"github.com/SmartMeshFoundation/Photon/utils"
 
 	"github.com/SmartMeshFoundation/matrix-regservice/rest"
 
-	"github.com/SmartMeshFoundation/SmartRaiden/log"
+	"github.com/SmartMeshFoundation/Photon/log"
 
 	"github.com/SmartMeshFoundation/matrix-regservice/internal/debug"
 
@@ -139,14 +139,14 @@ type hsConfig struct {
 		  aliases: []
 		  rooms: []
 		url: 'http://localhost:8009/regapp/1'
-		sender_localpart: app.transport01.smartraiden.network
+		sender_localpart: app.transport01.Photon.network
 		rate_limited: true
 		protocols:
-		  - app.transport01.smartraiden.network
+		  - app.transport01.Photon.network
 	*/
 	ID              string   `yaml:"id"`
 	HSToken         string   `yaml:"hs_token"`
-	ASToken         string   `yaml:"as_token""`
+	ASToken         string   `yaml:"as_token"`
 	URL             string   `yaml:"url"`
 	SenderLocalPart string   `yaml:"sender_localpart"`
 	Protocols       []string `yaml:"protocols"`

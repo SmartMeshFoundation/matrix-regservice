@@ -18,8 +18,8 @@ import (
 
 	"github.com/SmartMeshFoundation/matrix-regservice/params"
 
-	"github.com/SmartMeshFoundation/SmartRaiden/log"
-	sutils "github.com/SmartMeshFoundation/SmartRaiden/utils"
+	"github.com/SmartMeshFoundation/Photon/log"
+	sutils "github.com/SmartMeshFoundation/Photon/utils"
 	"github.com/ant0ine/go-json-rest/rest"
 )
 
@@ -41,8 +41,8 @@ type reg struct {
 /*
 {
     "access_token": "MDAyZGxvY2F0aW9uIHRyYW5zcG9ydDAxLnNtYXJ0cmFpZGVuLm5ldHdvcmsKMDAxM2lkZW50aWZpZXIga2V5CjAwMTBjaWQgZ2VuID0gMQowMDNjY2lkIHVzZXJfaWQgPSBAc29tZW9uZTM6dHJhbnNwb3J0MDEuc21hcnRyYWlkZW4ubmV0d29yawowMDE2Y2lkIHR5cGUgPSBhY2Nlc3MKMDAyMWNpZCBub25jZSA9IDF0Wml3MlFVcnlaYUtiaGoKMDAyZnNpZ25hdHVyZSD4fe93M_-P1qUD0nnFKUV7JyI6Jv02kLXaDZLu-gBUFwo",
-    "home_server": "transport01.smartraiden.network",
-    "user_id": "@someone3:transport01.smartraiden.network"
+    "home_server": "transport01.Photon.network",
+    "user_id": "@someone3:transport01.Photon.network"
 }
 */
 type regResp struct {
