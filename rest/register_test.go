@@ -11,7 +11,7 @@ import (
 
 	"github.com/SmartMeshFoundation/matrix-regservice/params"
 
-	"github.com/nkbai/goice/utils"
+	"github.com/SmartMeshFoundation/Photon/utils"
 )
 
 type mockWriter struct {
