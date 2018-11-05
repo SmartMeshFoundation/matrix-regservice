@@ -20,7 +20,7 @@ func SetupDB(dbPath string) error {
 	var err error
 	log.Trace(fmt.Sprintf("dbpath=%s", dbPath))
 	needCreateDb := !common.FileExist(dbPath)
-	db, err = storm.Open(dbPath, storm.BoltOptions(os.ModePerm, &bolt.Options{Timeout: 1 * time.Second}), storm.Codec(gobcodec.Codec))
+	db, err = storm.Open(dbPath, storm.BoltOptions(os.ModePerm, &bolt.Options{Timeout: 20 * time.Second}), storm.Codec(gobcodec.Codec))
 	if err != nil {
 		return err
 	}
