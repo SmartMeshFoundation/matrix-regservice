@@ -20,3 +20,6 @@ var APIPort = 8009
 
 //DBPath where db is saved
 var DBPath = ".matrix"
+
+//DebugMode for db test
+var DebugMode bool = true

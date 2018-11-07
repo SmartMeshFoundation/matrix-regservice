@@ -10,7 +10,6 @@ import (
 
 	"errors"
 
-	"github.com/SmartMeshFoundation/Photon/utils"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
@@ -22,7 +21,7 @@ func VerifyDisplayName(userID string, sig []byte) (err error) {
 	}
 	addr := common.HexToAddress(userID)
 	hash := crypto.Keccak256Hash(data)
-	sender, err := utils.Ecrecover(hash, sig)
+	sender, err := Ecrecover(hash, sig)
 	if err != nil {
 		return err
 	}
@@ -36,7 +35,7 @@ func VerifyDisplayName(userID string, sig []byte) (err error) {
 func VerifyPasswordSignature(addr common.Address, sig []byte) (err error) {
 	data := []byte(params.MatrixDomain)
 	hash := crypto.Keccak256Hash(data)
-	sender, err := utils.Ecrecover(hash, sig)
+	sender, err := Ecrecover(hash, sig)
 	if err != nil {
 		return err
 	}

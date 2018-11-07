@@ -124,7 +124,8 @@ func setupdb(ctx *cli.Context) error {
 		}
 	}
 	userDbPath := filepath.Join(datadir, "register.db")
-	return models.SetupDB(userDbPath)
+	models.SetUpDB(userDbPath)
+	return nil
 }
 
 type hsConfig struct {

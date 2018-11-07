@@ -6,16 +6,14 @@ import (
 
 	"github.com/SmartMeshFoundation/matrix-regservice/params"
 
-	"github.com/SmartMeshFoundation/Photon/utils"
-
 	"fmt"
 )
 
 func TestCreatePasswordAndVerify(t *testing.T) {
-	key, addr := utils.MakePrivateKeyAddress()
+	key, addr := MakePrivateKeyAddress()
 	userID := addr.String()
 	data := fmt.Sprintf("@%s:%s", userID, params.MatrixDomain)
-	sig, err := utils.SignData(key, []byte(data))
+	sig, err := SignData(key, []byte(data))
 	if err != nil {
 		t.Error(err)
 		return
@@ -25,7 +23,7 @@ func TestCreatePasswordAndVerify(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	sig, err = utils.SignData(key, []byte(params.MatrixDomain))
+	sig, err = SignData(key, []byte(params.MatrixDomain))
 	if err != nil {
 		t.Error(err)
 		return

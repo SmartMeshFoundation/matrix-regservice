@@ -34,7 +34,7 @@ func (m *mockWriter) WriteHeader(code int) {
 	}
 }
 func TestRegisterUser(t *testing.T) {
-	models.SetupDB("/tmp/aa.db")
+	models.SetupTestDB()
 	key, addr := utils.MakePrivateKeyAddress()
 	w := &mockWriter{
 		t: t,

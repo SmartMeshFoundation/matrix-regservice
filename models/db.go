@@ -1,41 +1,51 @@
 package models
 
 import (
-	"encoding/gob"
 	"fmt"
-	"os"
-	"time"
 
-	"github.com/SmartMeshFoundation/Photon/log"
-	"github.com/asdine/storm"
-	gobcodec "github.com/asdine/storm/codec/gob"
-	"github.com/coreos/bbolt"
-	"github.com/ethereum/go-ethereum/common"
+	"log"
+	"os"
+
+	"github.com/SmartMeshFoundation/matrix-regservice/params"
+	"github.com/jinzhu/gorm"
+	//_ "github.com/jinzhu/gorm/dialects/mysql"    //for gorm
+	//_ "github.com/jinzhu/gorm/dialects/postgres" //for gorm
+	_ "github.com/jinzhu/gorm/dialects/sqlite" //for gorm
 )
 
-var db *storm.DB
+var db *gorm.DB
 
-//SetupDB init db
-func SetupDB(dbPath string) error {
+//SetUpDB init db
+func SetUpDB(path string) {
 	var err error
-	log.Trace(fmt.Sprintf("dbpath=%s", dbPath))
-	needCreateDb := !common.FileExist(dbPath)
-	db, err = storm.Open(dbPath, storm.BoltOptions(os.ModePerm, &bolt.Options{Timeout: 20 * time.Second}), storm.Codec(gobcodec.Codec))
+	db, err = gorm.Open("sqlite3", path)
 	if err != nil {
-		return err
+		panic("failed to connect database")
 	}
-	initDB()
-	if needCreateDb {
+	if params.DebugMode {
+		db = db.Debug()
+		db.LogMode(true)
+	}
+	//db.SetLogger(gorm.Logger{revel.TRACE})
+	db.SetLogger(log.New(os.Stdout, "\r\n", 0))
+	db.AutoMigrate(&User{})
+	return
+}
 
-	}
-	return nil
-}
-func init() {
-	gob.Register(&User{})
-}
-func initDB() {
-	err := db.Init(&User{})
+//CloseDB release connection
+func CloseDB() {
+	err := db.Close()
 	if err != nil {
-		log.Error(fmt.Sprintf("db err %s", err))
+		log.Printf(fmt.Sprintf("closedb err %s", err))
 	}
+}
+
+//SetupTestDB for test only
+func SetupTestDB() {
+	dbPath := "/tmp/test.db"
+	err := os.Remove(dbPath)
+	if err != nil {
+		//ignore
+	}
+	SetUpDB(dbPath)
 }

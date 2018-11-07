@@ -2,7 +2,7 @@ package models
 
 //User register user for this service
 type User struct {
-	LocalPart   string `storm:"id"` //@someone:matrix.org someone is localpoart,matrix.org is domain
+	LocalPart   string `gorm:"primary_key"` //@someone:matrix.org someone is localpoart,matrix.org is domain
 	DisplayName string
 	Password    string
 }
@@ -10,7 +10,8 @@ type User struct {
 //IsUserAlreadyExists return true when this user already registered
 func IsUserAlreadyExists(localPart string) bool {
 	var u User
-	err := db.One("LocalPart", localPart, &u)
+	u.LocalPart = localPart
+	err := db.Where(&u).Find(&u).Error
 	return err == nil
 }
 
@@ -21,6 +22,6 @@ func NewUser(localPart, displayName, password string) (err error) {
 		DisplayName: displayName,
 		Password:    password,
 	}
-	err = db.Save(u)
+	err = db.Save(u).Error
 	return
 }

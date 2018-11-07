@@ -11,12 +11,8 @@ var dbPath string
 func setupDb(t *testing.T) {
 	dbPath = path.Join(os.TempDir(), "testxxxx.db")
 	os.Remove(dbPath)
-	os.Remove(dbPath + ".lock")
-	err := SetupDB(dbPath)
-	if err != nil {
-		t.Error(err)
-		return
-	}
+	SetUpDB(dbPath)
+
 	return
 }
 
