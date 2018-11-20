@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"os/signal"
 	"path/filepath"
+	"time"
 
 	"gopkg.in/yaml.v2"
 
@@ -101,6 +103,15 @@ func mainCtx(ctx *cli.Context) {
 	if err != nil {
 		panic(err)
 	}
+	go func() {
+		quitSignal := make(chan os.Signal, 1)
+		signal.Notify(quitSignal, os.Interrupt, os.Kill)
+		<-quitSignal
+		signal.Stop(quitSignal)
+		models.CloseDB()
+		time.Sleep(time.Second * 2)
+		os.Exit(0)
+	}()
 	rest.Start()
 }
 

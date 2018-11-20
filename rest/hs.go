@@ -10,12 +10,15 @@ import (
 
 func aliasQuery(w rest.ResponseWriter, r *rest.Request) {
 	printreq(r)
+	//w.WriteJson(make(map[string]string)) must fail
 }
 func userQuery(w rest.ResponseWriter, r *rest.Request) {
 	printreq(r)
+	//w.WriteJson(make(map[string]string))
 }
 func newTransaction(w rest.ResponseWriter, r *rest.Request) {
 	printreq(r)
+	//w.WriteJson(make(map[string]string))
 }
 func printreq(r *rest.Request) {
 	log.Trace(fmt.Sprintf("path=%s,args=%s", r.RequestURI, r.PathParams))
