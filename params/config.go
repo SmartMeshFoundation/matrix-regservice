@@ -7,7 +7,7 @@ var MatrixRegisterUrl = "http://transport13.smartmesh.cn:8008/_matrix/client/api
 var MatrixShareSecret = "sharedsecret"
 
 //MatrixDomain domain of
-var MatrixDomain = "transport01.photon.network"
+var MatrixDomain = "transport13.photon.network"
 
 //APIHost is host for service listening
 var APIHost = "127.0.0.1"

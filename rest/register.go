@@ -34,9 +34,9 @@ import (
 }
 */
 type reg struct {
-	LocalPart    string `json:"localpart"`     //@someone:matrix.org someone is localpoart,matrix.org is domain
-	DisplayName  string `json:"displayname"`   // displayname of this user
-	PasswordHash string `json:"password_hash"` // password hash calc using bcrypt
+	LocalPart    string `json:"localpart"`               //@someone:matrix.org someone is localpoart,matrix.org is domain
+	DisplayName  string `json:"displayname"`             // displayname of this user
+	PasswordHash string `json:"password_hash,omitempty"` // password hash calc using bcrypt
 	Password     string `json:"password,omitempty"`
 }
 
@@ -148,8 +148,8 @@ type regHelper struct {
 
 func registerOnHomeServer(r *reg) (resp *regResp, err error) {
 	var req *http.Request
-	r.PasswordHash = utils.HashPasswordWrapper(r.Password)
-	r.Password = ""
+	//r.PasswordHash = utils.HashPasswordWrapper(r.Password)
+	//r.Password = ""
 	jsonStr, err := json.Marshal(r)
 	if err != nil {
 		return
@@ -167,7 +167,7 @@ func registerOnHomeServer(r *reg) (resp *regResp, err error) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("body=%s", string(body))
+	fmt.Printf("body=%s\n", string(body))
 	var nh nonceHelper
 	err = json.Unmarshal(body, &nh)
 	if err != nil {
@@ -175,7 +175,7 @@ func registerOnHomeServer(r *reg) (resp *regResp, err error) {
 	}
 	var rh regHelper
 	rh.UserName = r.LocalPart
-	rh.Password = r.PasswordHash
+	rh.Password = r.Password
 	rh.Admin = false
 	rh.Nonce = nh.Nonce
 	rh.Mac = hmacRegHelper(&rh)
@@ -194,7 +194,7 @@ func registerOnHomeServer(r *reg) (resp *regResp, err error) {
 	if err != nil {
 		return
 	}
-	fmt.Printf("body2=%s", string(body))
+	fmt.Printf("body2=%s\n", string(body))
 	resp = &regResp{}
 	err = json.Unmarshal(body, resp)
 	if err != nil {
