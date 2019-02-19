@@ -29,14 +29,9 @@ func main() {
 	app := cli.NewApp()
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name:  "astoken",
-			Usage: "acess  token for matrix HomeServer",
-			Value: params.ASToken,
-		},
-		cli.StringFlag{
-			Name:  "hstoken",
+			Name:  "sharesecret",
 			Usage: "homeserver access token for my service",
-			Value: params.HSToken,
+			Value: params.MatrixShareSecret,
 		},
 		cli.StringFlag{
 			Name:  "matrixurl",
@@ -67,7 +62,7 @@ func main() {
 	app.Flags = append(app.Flags, debug.Flags...)
 	app.Action = mainCtx
 	app.Name = "matrix registor service"
-	app.Version = "0.1"
+	app.Version = "0.2" // 按照matrix-synapse 0.99.1 设计,使用/_matrix/client/api/v1/admin/register进行注册用户
 	app.Before = func(ctx *cli.Context) error {
 		if err := debug.Setup(ctx); err != nil {
 			return err
@@ -117,8 +112,7 @@ func mainCtx(ctx *cli.Context) {
 
 func config(ctx *cli.Context) error {
 	params.MatrixRegisterUrl = ctx.GlobalString("matrixurl")
-	params.ASToken = ctx.GlobalString("astoken")
-	params.HSToken = ctx.GlobalString("hstoken")
+	params.MatrixShareSecret = ctx.GlobalString("sharesecret")
 	params.APIHost = ctx.GlobalString("host")
 	params.APIPort = ctx.GlobalInt("port")
 	params.MatrixDomain = ctx.GlobalString("matrixdomain")

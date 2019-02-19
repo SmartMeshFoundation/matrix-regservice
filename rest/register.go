@@ -2,6 +2,8 @@ package rest
 
 import (
 	"bytes"
+	"crypto/hmac"
+	"crypto/sha1"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
@@ -49,6 +51,7 @@ type regResp struct {
 	AccessToken string `json:"access_token"`
 	HomeServer  string `json:"home_server"`
 	UserID      string `json:"user_id"`
+	DeviceID    string `json:"device_id"`
 }
 
 //RegisterUser new user for homeserver
@@ -132,6 +135,17 @@ var hclient = &http.Client{
 	},
 }
 
+type nonceHelper struct {
+	Nonce string `json:"nonce"`
+}
+type regHelper struct {
+	Nonce    string `json:"nonce"`
+	UserName string `json:"username"`
+	Password string `json:"password"`
+	Admin    bool   `json:"admin"`
+	Mac      string `json:"mac"`
+}
+
 func registerOnHomeServer(r *reg) (resp *regResp, err error) {
 	var req *http.Request
 	r.PasswordHash = utils.HashPasswordWrapper(r.Password)
@@ -140,23 +154,69 @@ func registerOnHomeServer(r *reg) (resp *regResp, err error) {
 	if err != nil {
 		return
 	}
-	url := fmt.Sprintf("%s?access_token=%s", params.MatrixRegisterUrl, params.ASToken)
-	req, err = http.NewRequest(http.MethodPost, url, bytes.NewBuffer(jsonStr))
-	log.Trace(fmt.Sprintf("registeronhomeserver url=%s,body=%s",
-		url, string(jsonStr)))
+	req, err = http.NewRequest(http.MethodGet, params.MatrixRegisterUrl, nil)
+	if err != nil {
+		panic(err)
+	}
 	res, err := hclient.Do(req)
 	if err != nil {
-		return
+		panic(err)
 	}
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("body=%s", string(body))
+	var nh nonceHelper
+	err = json.Unmarshal(body, &nh)
+	if err != nil {
+		panic(err)
+	}
+	var rh regHelper
+	rh.UserName = r.LocalPart
+	rh.Password = r.PasswordHash
+	rh.Admin = false
+	rh.Nonce = nh.Nonce
+	rh.Mac = hmacRegHelper(&rh)
+	jsonStr, err = json.Marshal(rh)
+	if err != nil {
+		panic(err)
+	}
+	req, err = http.NewRequest(http.MethodPost, params.MatrixRegisterUrl, bytes.NewBuffer(jsonStr))
+
+	res2, err := hclient.Do(req)
+	if err != nil {
 		return
 	}
+	defer res2.Body.Close()
+	body, err = ioutil.ReadAll(res2.Body)
+	if err != nil {
+		return
+	}
+	fmt.Printf("body2=%s", string(body))
 	resp = &regResp{}
 	err = json.Unmarshal(body, resp)
 	if err != nil {
 		return
 	}
 	return
+}
+
+func hmacRegHelper(r *regHelper) string {
+	key := []byte(params.MatrixShareSecret)
+	mac := hmac.New(sha1.New, key)
+	mac.Write([]byte(r.Nonce))
+	mac.Write([]byte{0})
+	mac.Write([]byte(r.UserName))
+	mac.Write([]byte{0})
+	mac.Write([]byte(r.Password))
+	mac.Write([]byte{0})
+	if r.Admin {
+		mac.Write([]byte("admin"))
+	} else {
+		mac.Write([]byte("notadmin"))
+	}
+	//fmt.Printf("%x\n", mac.Sum(nil))
+	return hex.EncodeToString(mac.Sum(nil))
 }

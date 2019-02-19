@@ -1,13 +1,10 @@
 package params
 
-//ASToken is auth for request send to matrix
-var ASToken = "8309e0e83ea8ddfb41ed860eb76be627256d4651ccd2c313597d6f286f41bf82"
-
-//HSToken is auth for receive request from matrix
-var HSToken = "6350c08ee06eed113f84da06c2f85369dcf0777d79d9679efd3ad2abdadd01d9"
-
 //MatrixRegisterUrl is url for register new user
-var MatrixRegisterUrl = "http://127.0.0.1:8008/_matrix/client/api/v1/createUser"
+var MatrixRegisterUrl = "http://transport13.smartmesh.cn:8008/_matrix/client/api/v1/admin/register"
+
+//MatrixShareSecret share secret
+var MatrixShareSecret = "sharedsecret"
 
 //MatrixDomain domain of
 var MatrixDomain = "transport01.photon.network"
